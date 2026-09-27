@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>雨巷来信</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="scene">
+        <canvas id="sceneCanvas" aria-label="剧情画面"></canvas>
+        <div class="scene-title">
+          <span id="chapterLabel">第一夜</span>
+          <strong id="sceneTitle">旧公寓</strong>
+        </div>
+        <div class="meters" aria-label="角色状态">
+          <div class="meter">
+            <span>信任</span>
+            <div><i id="trustBar"></i></div>
+            <strong id="trustValue">0</strong>
+          </div>
+          <div class="meter">
+            <span>线索</span>
+            <div><i id="clueBar"></i></div>
+            <strong id="clueValue">0</strong>
+          </div>
+          <div class="meter">
+            <span>异兆</span>
+            <div><i id="omenBar"></i></div>
+            <strong id="omenValue">0</strong>
+          </div>
+        </div>
+        <div class="dialog-layer">
+          <div class="portrait-card">
+            <canvas id="portraitCanvas" width="96" height="96" aria-label="当前人物头像"></canvas>
+            <span id="speakerLabel">黑猫</span>
+          </div>
+          <article class="dialog-box">
+            <div class="dialog-copy">
+              <span id="locationLabel" class="location">三号楼 · 旧走廊</span>
+              <h2 id="nodeTitle">黑猫在窗外</h2>
+              <div id="storyText" class="story-text"></div>
+            </div>
+            <div id="choices" class="choices" aria-label="选择"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="story">
+        <header class="topbar">
+          <div>
+            <span class="kicker">BRANCH STORY</span>
+            <h1>雨巷来信</h1>
+          </div>
+          <div class="tools">
+            <button id="journalButton" class="round-button" type="button" title="成就">◇</button>
+            <button id="endingsButton" class="round-button" type="button" title="结局">◆</button>
+            <button id="restartButton" class="round-button" type="button" title="重新开始">↺</button>
+          </div>
+        </header>
+
+        <div id="changeLog" class="change-log" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div id="panelBackdrop" class="panel-backdrop" hidden>
+      <aside class="collection-panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+        <button id="panelCloseButton" class="panel-close" type="button" title="关闭">×</button>
+        <span id="panelKicker" class="kicker">COLLECTION</span>
+        <h2 id="panelTitle">成就册</h2>
+        <div id="panelContent" class="panel-content"></div>
+      </aside>
+    </div>
+
+    <script src="./game.js"></script>
+  </body>
+</html>
