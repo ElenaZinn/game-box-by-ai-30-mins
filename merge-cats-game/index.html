@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>合成猫猫</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css?v=2" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="game-card" aria-label="合成猫猫游戏区">
+        <div class="topbar">
+          <div>
+            <h1>合成猫猫</h1>
+            <p id="statusText">READY</p>
+          </div>
+          <button id="restartBtn" class="icon-button" type="button" aria-label="重新开始" title="重新开始">
+            ↻
+          </button>
+        </div>
+
+        <div id="board" class="board">
+          <canvas id="gameCanvas"></canvas>
+          <div class="danger-line"></div>
+          <div id="gameOver" class="game-over" hidden>
+            <strong>GAME OVER</strong>
+            <button id="againBtn" type="button">Restart</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="游戏状态">
+        <div class="stat-grid">
+          <div class="stat">
+            <span>SCORE</span>
+            <strong id="scoreText">0</strong>
+          </div>
+          <div class="stat">
+            <span>BEST</span>
+            <strong id="bestText">0</strong>
+          </div>
+        </div>
+
+        <div class="next-box">
+          <span>NEXT</span>
+          <canvas id="nextCanvas" width="116" height="116"></canvas>
+        </div>
+
+        <div class="catdex">
+          <span>CATDEX</span>
+          <div id="catdexGrid" class="catdex-grid"></div>
+        </div>
+
+        <div class="toggles">
+          <label class="switch">
+            <input id="soundToggle" type="checkbox" checked />
+            <span>Sound</span>
+          </label>
+        </div>
+      </aside>
+    </main>
+
+    <script src="./node_modules/matter-js/build/matter.min.js"></script>
+    <script src="./game.js"></script>
+  </body>
+</html>

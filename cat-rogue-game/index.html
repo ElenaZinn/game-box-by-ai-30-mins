@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫猫地牢</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="game-panel" aria-label="猫猫地牢游戏区">
+        <header class="topbar">
+          <div>
+            <h1>猫猫地牢</h1>
+            <p id="statusText">FLOOR 1</p>
+          </div>
+          <div class="actions">
+            <button id="waitBtn" class="icon-button" type="button" aria-label="等待" title="等待">·</button>
+            <button id="restartBtn" class="icon-button" type="button" aria-label="重新开始" title="重新开始">↻</button>
+          </div>
+        </header>
+
+        <div id="dungeonWrap" class="dungeon-wrap">
+          <canvas id="gameCanvas"></canvas>
+          <div id="choiceOverlay" class="choice-overlay" hidden>
+            <strong>选择一个强化</strong>
+            <div id="choiceList" class="choice-list"></div>
+          </div>
+          <div id="gameOverOverlay" class="game-over" hidden>
+            <strong id="gameOverTitle">倒下了</strong>
+            <button id="againBtn" type="button">Restart</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="角色状态">
+        <div class="hero-card">
+          <span>CAT</span>
+          <strong id="heroName">豆包</strong>
+          <small id="heroLine">一只认真冒险的猫</small>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat">
+            <span>HP</span>
+            <strong id="hpText">24/24</strong>
+          </div>
+          <div class="stat">
+            <span>ATK</span>
+            <strong id="atkText">5</strong>
+          </div>
+          <div class="stat">
+            <span>DEF</span>
+            <strong id="defText">1</strong>
+          </div>
+          <div class="stat">
+            <span>FISH</span>
+            <strong id="fishText">0</strong>
+          </div>
+        </div>
+
+        <div class="skill-panel">
+          <span>SKILLS</span>
+          <div id="skillList"></div>
+        </div>
+
+        <div class="relic-panel">
+          <span>RELICS</span>
+          <div id="relicList"></div>
+        </div>
+
+        <div class="log-panel">
+          <span>LOG</span>
+          <div id="logList"></div>
+        </div>
+      </aside>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>

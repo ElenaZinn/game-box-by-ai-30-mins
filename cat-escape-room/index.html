@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫猫密室：第七号书房</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="room-panel" aria-label="猫猫密室游戏区">
+        <header class="topbar">
+          <div>
+            <h1>猫猫密室：第七号书房</h1>
+            <p id="statusText">ROOM</p>
+          </div>
+          <div class="actions">
+            <button id="backBtn" class="icon-button" type="button" aria-label="返回" title="返回">←</button>
+            <button id="restartBtn" class="icon-button" type="button" aria-label="重新开始" title="重新开始">↻</button>
+          </div>
+        </header>
+
+        <div id="stageWrap" class="stage-wrap">
+          <canvas id="gameCanvas"></canvas>
+          <div id="endingOverlay" class="ending" hidden>
+            <strong>ESCAPED</strong>
+            <span id="endingText">你和猫一起离开了第七号书房。</span>
+            <button id="againBtn" type="button">Restart</button>
+          </div>
+        </div>
+
+        <div id="inventoryBar" class="inventory-bar"></div>
+      </section>
+
+      <aside class="side-panel" aria-label="解谜状态">
+        <div class="hint-card">
+          <span>HINT</span>
+          <strong id="hintTitle">夜晚书房</strong>
+          <small id="hintText">点击房间里的物体查看细节。</small>
+        </div>
+
+        <div id="inputPanel" class="input-panel" hidden>
+          <span id="inputLabel">CODE</span>
+          <strong id="inputValue">____</strong>
+          <div class="keypad">
+            <button type="button" data-key="1">1</button>
+            <button type="button" data-key="2">2</button>
+            <button type="button" data-key="3">3</button>
+            <button type="button" data-key="4">4</button>
+            <button type="button" data-key="5">5</button>
+            <button type="button" data-key="6">6</button>
+            <button type="button" data-key="7">7</button>
+            <button type="button" data-key="8">8</button>
+            <button type="button" data-key="9">9</button>
+            <button type="button" data-key="clear">C</button>
+            <button type="button" data-key="0">0</button>
+            <button type="button" data-key="ok">OK</button>
+          </div>
+        </div>
+
+        <div id="directionPanel" class="direction-panel" hidden>
+          <span>DIRECTION</span>
+          <strong id="directionValue">----</strong>
+          <div class="dir-grid">
+            <button type="button" data-dir="L">←</button>
+            <button type="button" data-dir="R">→</button>
+            <button type="button" data-dir="clear">C</button>
+            <button type="button" data-dir="ok">OK</button>
+          </div>
+        </div>
+
+        <div class="progress-panel">
+          <span>FOUND</span>
+          <div id="progressList"></div>
+        </div>
+
+        <div class="log-panel">
+          <span>LOG</span>
+          <div id="logList"></div>
+        </div>
+      </aside>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>

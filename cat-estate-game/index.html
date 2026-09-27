@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫猫地产棋</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="board-panel" aria-label="猫猫地产棋棋盘">
+        <header class="topbar">
+          <div>
+            <h1>猫猫地产棋</h1>
+            <p id="statusText">READY</p>
+          </div>
+          <div class="actions">
+            <button id="restartBtn" class="icon-button" type="button" aria-label="重新开始" title="重新开始">↻</button>
+          </div>
+        </header>
+
+        <div id="boardWrap" class="board-wrap">
+          <canvas id="gameCanvas"></canvas>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="游戏状态">
+        <div class="turn-card">
+          <span>TURN</span>
+          <strong id="turnText">你</strong>
+          <small id="diceText">-</small>
+        </div>
+
+        <div class="controls">
+          <button id="rollBtn" type="button">Roll</button>
+          <button id="buyBtn" type="button">Buy</button>
+          <button id="upgradeBtn" type="button">Upgrade</button>
+          <button id="endBtn" type="button">End</button>
+        </div>
+
+        <div id="playersPanel" class="players-panel"></div>
+
+        <div class="tile-panel">
+          <span>TILE</span>
+          <strong id="tileName">START</strong>
+          <small id="tileDetail">猫猫银行开张</small>
+        </div>
+
+        <div class="log-panel">
+          <span>LOG</span>
+          <div id="logList"></div>
+        </div>
+      </aside>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>

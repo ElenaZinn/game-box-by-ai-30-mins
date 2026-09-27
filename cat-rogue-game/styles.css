@@ -1,0 +1,425 @@
+:root {
+  color-scheme: light;
+  --ink: #1f231e;
+  --muted: rgba(31, 35, 30, 0.58);
+  --panel: rgba(255, 255, 255, 0.84);
+  --line: rgba(31, 35, 30, 0.13);
+  --leaf: #348f68;
+  --coral: #e96356;
+  --gold: #e8b746;
+  --violet: #805fc6;
+  --stone: #5f6b68;
+  --shadow: rgba(31, 35, 30, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(52, 143, 104, 0.22), transparent 24rem),
+    radial-gradient(circle at 86% 20%, rgba(233, 99, 86, 0.18), transparent 22rem),
+    linear-gradient(135deg, #f7f5eb 0%, #edf6ee 48%, #f6eff8 100%);
+  color: var(--ink);
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  width: min(1220px, calc(100vw - 32px));
+  height: min(900px, calc(100vh - 32px));
+  margin: 16px auto;
+  display: grid;
+  grid-template-columns: minmax(560px, 820px) minmax(280px, 330px);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.game-panel,
+.side-panel {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: 8px;
+  box-shadow: 0 24px 62px var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.game-panel {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.topbar {
+  height: 78px;
+  padding: 16px 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+h1 {
+  margin: 0;
+  font-size: 27px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.topbar p {
+  margin: 8px 0 0;
+  color: var(--leaf);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  line-height: 1;
+  box-shadow: 0 10px 24px rgba(31, 35, 30, 0.20);
+}
+
+.dungeon-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.24) 1px, transparent 1px),
+    linear-gradient(180deg, #dbe9df 0%, #efe8d0 56%, #ead9dc 100%);
+  background-size: 34px 34px, 34px 34px, auto;
+  touch-action: none;
+}
+
+#gameCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.choice-overlay,
+.game-over {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-content: center;
+  gap: 18px;
+  padding: 24px;
+  background: rgba(31, 35, 30, 0.52);
+  text-align: center;
+}
+
+.choice-overlay strong,
+.game-over strong {
+  color: #fffaf0;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.choice-list {
+  width: min(620px, calc(100vw - 54px));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.choice-card {
+  min-height: 156px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 8px;
+  background: rgba(255, 250, 240, 0.94);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 16px;
+  text-align: left;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+}
+
+.choice-card strong {
+  display: block;
+  color: var(--ink);
+  font-size: 20px;
+  text-shadow: none;
+}
+
+.choice-card span {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.game-over button {
+  width: 154px;
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #30240b;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.side-panel {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+
+.hero-card,
+.stat,
+.skill-panel,
+.relic-panel,
+.log-panel {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.68);
+  border-radius: 8px;
+}
+
+.hero-card,
+.skill-panel,
+.relic-panel,
+.log-panel {
+  padding: 14px;
+}
+
+.hero-card span,
+.stat span,
+.skill-panel span,
+.relic-panel span,
+.log-panel span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.hero-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.hero-card small {
+  display: block;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat {
+  min-height: 80px;
+  padding: 13px;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 28px;
+  line-height: 1;
+}
+
+#skillList,
+#relicList {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  min-height: 28px;
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(52, 143, 104, 0.12);
+  color: var(--leaf);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.relic-panel {
+  min-height: 86px;
+}
+
+.log-panel {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#logList {
+  height: calc(100% - 24px);
+  margin-top: 10px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: thin;
+}
+
+.log-line {
+  color: rgba(31, 35, 30, 0.76);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+@media (max-width: 920px) {
+  body {
+    overflow: auto;
+  }
+
+  .app {
+    width: min(100vw - 18px, 680px);
+    height: auto;
+    min-height: calc(100vh - 18px);
+    margin: 9px auto;
+    grid-template-columns: 1fr;
+  }
+
+  .game-panel {
+    height: min(720px, calc(100vh - 250px));
+    min-height: 520px;
+  }
+
+  .choice-list {
+    grid-template-columns: 1fr;
+  }
+
+  .side-panel {
+    min-height: 360px;
+  }
+}
+
+/* Eerie storybook reskin: muted ink, old paper, hard outlines. */
+:root {
+  --ink: #1d1914;
+  --muted: rgba(29, 25, 20, 0.58);
+  --panel: rgba(226, 214, 187, 0.92);
+  --line: rgba(29, 25, 20, 0.28);
+  --leaf: #53614b;
+  --coral: #8f3a32;
+  --gold: #b7893f;
+  --violet: #61506b;
+  --stone: #5e6259;
+  --shadow: rgba(29, 22, 15, 0.34);
+}
+
+body {
+  background-color: #d8c9aa;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(29, 25, 20, 0.035) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgba(255, 250, 229, 0.20) 0 1px, transparent 1px 12px),
+    linear-gradient(135deg, #c7b28f 0%, #e0d3b7 45%, #9b6d56 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.42;
+  background:
+    repeating-linear-gradient(22deg, rgba(34, 28, 21, 0.06) 0 1px, transparent 1px 9px),
+    linear-gradient(180deg, rgba(22, 18, 15, 0.12), rgba(255, 244, 211, 0.10));
+}
+
+h1 {
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-weight: 900;
+}
+
+.game-panel,
+.side-panel {
+  background: var(--panel);
+  border: 2px solid #1d1914;
+  box-shadow: 8px 10px 0 rgba(29, 25, 20, 0.22), 0 24px 62px var(--shadow);
+}
+
+.topbar {
+  border-bottom: 2px solid #1d1914;
+}
+
+.dungeon-wrap {
+  background:
+    repeating-linear-gradient(0deg, rgba(32, 27, 22, 0.08) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(32, 27, 22, 0.08) 0 1px, transparent 1px 34px),
+    linear-gradient(180deg, #5e6259 0%, #9a8a69 48%, #65493b 100%);
+}
+
+.dungeon-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(16, 13, 10, 0.24), transparent 18%, transparent 82%, rgba(16, 13, 10, 0.24)),
+    linear-gradient(180deg, rgba(16, 13, 10, 0.22), transparent 24%, transparent 78%, rgba(16, 13, 10, 0.26));
+}
+
+#gameCanvas {
+  filter: sepia(0.30) saturate(0.62) contrast(1.10) brightness(0.92);
+}
+
+.icon-button,
+.choice-card,
+.game-over button,
+.hero-card,
+.stat,
+.skill-panel,
+.relic-panel,
+.log-panel {
+  border-radius: 4px;
+}

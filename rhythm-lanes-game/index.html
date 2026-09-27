@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>四键电音</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="stage" aria-label="四键电音游戏区">
+        <header class="topbar">
+          <div>
+            <h1>四键电音</h1>
+            <p id="statusText">READY</p>
+          </div>
+          <div class="actions">
+            <button id="startBtn" class="round-button primary" type="button" aria-label="开始" title="开始">
+              ▶
+            </button>
+            <button id="restartBtn" class="round-button" type="button" aria-label="重新开始" title="重新开始">
+              ↻
+            </button>
+          </div>
+        </header>
+
+        <div id="playfield" class="playfield">
+          <canvas id="gameCanvas"></canvas>
+          <div class="lane-keys" aria-hidden="true">
+            <span>D</span>
+            <span>F</span>
+            <span>J</span>
+            <span>K</span>
+          </div>
+          <div id="overlay" class="overlay">
+            <strong id="overlayTitle">READY</strong>
+            <button id="overlayButton" type="button">Start</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="游戏状态">
+        <div class="stat-grid">
+          <div class="stat">
+            <span>SCORE</span>
+            <strong id="scoreText">0</strong>
+          </div>
+          <div class="stat">
+            <span>COMBO</span>
+            <strong id="comboText">0</strong>
+          </div>
+          <div class="stat">
+            <span>BEST</span>
+            <strong id="bestText">0</strong>
+          </div>
+          <div class="stat">
+            <span>ACC</span>
+            <strong id="accText">100%</strong>
+          </div>
+        </div>
+
+        <div class="meter-panel">
+          <span>ENERGY</span>
+          <div class="energy-shell">
+            <div id="energyBar"></div>
+          </div>
+        </div>
+
+        <div class="judge-panel">
+          <span>JUDGE</span>
+          <strong id="judgeText">-</strong>
+          <small id="timingText">0 ms</small>
+        </div>
+
+        <div class="mix-panel">
+          <label for="volumeSlider">VOLUME</label>
+          <input id="volumeSlider" type="range" min="0" max="100" value="72" />
+        </div>
+      </aside>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>

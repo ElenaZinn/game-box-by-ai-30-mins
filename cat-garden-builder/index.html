@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫猫花园</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="garden-panel" aria-label="猫猫花园">
+        <header class="topbar">
+          <div>
+            <h1>猫猫花园</h1>
+            <p id="statusText">MORNING</p>
+          </div>
+          <div class="actions">
+            <button id="rotateBtn" class="icon-button" type="button" aria-label="旋转" title="旋转">↻</button>
+            <button id="saveBtn" class="icon-button" type="button" aria-label="保存" title="保存">✓</button>
+            <button id="resetBtn" class="icon-button danger" type="button" aria-label="重置" title="重置">×</button>
+          </div>
+        </header>
+
+        <div id="gardenWrap" class="garden-wrap">
+          <canvas id="gameCanvas"></canvas>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="花园工具">
+        <div class="wallet">
+          <span>COINS</span>
+          <strong id="coinText">120</strong>
+          <small id="dayText">Day 1 · 06:00</small>
+        </div>
+
+        <div class="tool-row" id="toolRow"></div>
+
+        <div class="catalog">
+          <div class="tabs">
+            <button id="seedTab" type="button">Seeds</button>
+            <button id="buildTab" type="button">Build</button>
+          </div>
+          <div id="catalogList" class="catalog-list"></div>
+        </div>
+
+        <div class="selection">
+          <span>SELECTED</span>
+          <strong id="selectedName">小雏菊</strong>
+          <small id="selectedDetail">8 coins</small>
+        </div>
+
+        <div class="log-panel">
+          <span>LOG</span>
+          <div id="logList"></div>
+        </div>
+      </aside>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>

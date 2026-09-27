@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>夜巷追捕</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">SPACE JUMP CHASE</p>
+          <h1>夜巷追捕</h1>
+        </div>
+        <div class="actions" aria-label="游戏操作">
+          <button id="pauseBtn" class="icon-button" type="button" title="暂停或继续" aria-label="暂停或继续">
+            <span id="pauseIcon" aria-hidden="true">II</span>
+          </button>
+          <button id="restartBtn" class="icon-button" type="button" title="重新开始" aria-label="重新开始">
+            <span aria-hidden="true">↻</span>
+          </button>
+          <button id="throwBtn" class="icon-button" type="button" title="投掷鸡蛋" aria-label="投掷鸡蛋">
+            <span aria-hidden="true">○</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="stage-wrap" aria-label="夜巷追捕游戏区域">
+        <canvas id="game" width="960" height="540" tabindex="0"></canvas>
+        <div id="toast" class="toast">准备追捕</div>
+      </section>
+
+      <section class="stats" aria-label="游戏状态">
+        <div class="stat">
+          <span>得分</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="stat">
+          <span>金币</span>
+          <strong id="coins">0</strong>
+        </div>
+        <div class="stat eggs">
+          <span>鸡蛋</span>
+          <strong id="eggs">3</strong>
+        </div>
+        <div class="stat">
+          <span>距离</span>
+          <strong id="distance">0m</strong>
+        </div>
+        <div class="stat energy">
+          <span>能量</span>
+          <strong id="energy">|||</strong>
+        </div>
+      </section>
+    </main>
+
+    <script src="./game.js" defer></script>
+  </body>
+</html>

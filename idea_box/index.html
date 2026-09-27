@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Idea Box Static</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: #1d2430;
+      background: #f4f0e8;
+      font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+      gap: 16px;
+      width: min(1180px, calc(100vw - 32px));
+      height: calc(100vh - 32px);
+      margin: 16px auto;
+    }
+
+    .panel {
+      min-height: 0;
+      border: 1px solid #ded6c9;
+      border-radius: 8px;
+      background: #fffdf9;
+      box-shadow: 0 10px 30px rgba(34, 28, 20, 0.08);
+    }
+
+    .list-panel,
+    .editor-panel {
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+    }
+
+    .topbar,
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar {
+      justify-content: space-between;
+    }
+
+    .eyebrow {
+      margin: 0 0 2px;
+      color: #7d6e5d;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 8px;
+      color: white;
+      background: #2457d6;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .search,
+    .title-input,
+    .tags-input,
+    .body-input {
+      width: 100%;
+      border: 1px solid #d7cdbc;
+      border-radius: 8px;
+      outline: none;
+      background: #fffaf0;
+    }
+
+    .search {
+      height: 42px;
+      margin: 18px 0 12px;
+      padding: 0 12px;
+    }
+
+    .notes {
+      overflow: auto;
+      display: grid;
+      gap: 8px;
+      padding-right: 2px;
+    }
+
+    .note {
+      display: grid;
+      gap: 5px;
+      padding: 12px;
+      border: 1px solid #e5dccd;
+      border-radius: 8px;
+      background: #fffaf0;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .note.active {
+      border-color: #2457d6;
+      background: #eef3ff;
+    }
+
+    .note-title {
+      overflow: hidden;
+      color: #161b24;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .note-meta,
+    .status {
+      color: #71675a;
+      font-size: 12px;
+    }
+
+    .title-input {
+      height: 54px;
+      padding: 0 14px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .tags-input {
+      height: 42px;
+      margin-top: 12px;
+      padding: 0 12px;
+    }
+
+    .body-input {
+      flex: 1;
+      min-height: 220px;
+      margin-top: 12px;
+      padding: 14px;
+      resize: none;
+    }
+
+    .actions {
+      margin-top: 12px;
+    }
+
+    .status {
+      flex: 1;
+    }
+
+    .primary-button,
+    .danger-button {
+      height: 38px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 16px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .primary-button {
+      background: #2457d6;
+    }
+
+    .danger-button {
+      background: #b83232;
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .list-panel,
+      .editor-panel {
+        min-height: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="panel list-panel">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">Local notes</p>
+          <h1>Idea Box</h1>
+        </div>
+        <button id="new-note" class="icon-button" title="New note">+</button>
+      </div>
+      <input id="search" class="search" placeholder="Search title, body, or tags" />
+      <div id="notes" class="notes"></div>
+    </section>
+
+    <section class="panel editor-panel">
+      <input id="title" class="title-input" placeholder="Untitled idea" />
+      <input id="tags" class="tags-input" placeholder="tags, comma separated" />
+      <textarea id="body" class="body-input" placeholder="Write the small thing before it escapes."></textarea>
+      <div class="actions">
+        <span id="status" class="status">Ready</span>
+        <button id="delete-note" class="danger-button">Delete</button>
+        <button id="save-note" class="primary-button">Save</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const key = "idea-box-static-v1";
+    let notes = JSON.parse(localStorage.getItem(key) || "[]");
+    let activeId = null;
+
+    const $ = (id) => document.getElementById(id);
+    const els = {
+      notes: $("notes"),
+      search: $("search"),
+      title: $("title"),
+      tags: $("tags"),
+      body: $("body"),
+      status: $("status"),
+      save: $("save-note"),
+      del: $("delete-note"),
+      fresh: $("new-note"),
+    };
+
+    function persist() {
+      localStorage.setItem(key, JSON.stringify(notes));
+    }
+
+    function setStatus(text) {
+      els.status.textContent = text;
+    }
+
+    function renderNotes() {
+      const query = els.search.value.trim().toLowerCase();
+      const filtered = notes
+        .slice()
+        .sort((a, b) => b.updatedAt - a.updatedAt)
+        .filter((note) => `${note.title} ${note.tags} ${note.body}`.toLowerCase().includes(query));
+
+      els.notes.innerHTML = "";
+      for (const note of filtered) {
+        const button = document.createElement("button");
+        button.className = `note ${note.id === activeId ? "active" : ""}`;
+        button.type = "button";
+        button.addEventListener("click", () => selectNote(note.id));
+
+        const title = document.createElement("div");
+        title.className = "note-title";
+        title.textContent = note.title || "Untitled idea";
+
+        const meta = document.createElement("div");
+        meta.className = "note-meta";
+        meta.textContent = note.tags || "No tags";
+
+        button.append(title, meta);
+        els.notes.append(button);
+      }
+
+      if (filtered.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "note-meta";
+        empty.textContent = "Nothing here yet.";
+        els.notes.append(empty);
+      }
+    }
+
+    function selectNote(id) {
+      activeId = id;
+      const note = notes.find((item) => item.id === id);
+      els.title.value = note?.title || "";
+      els.tags.value = note?.tags || "";
+      els.body.value = note?.body || "";
+      renderNotes();
+    }
+
+    function newNote() {
+      activeId = null;
+      els.title.value = "";
+      els.tags.value = "";
+      els.body.value = "";
+      setStatus("New note");
+      renderNotes();
+    }
+
+    function saveNote() {
+      const now = Date.now();
+      const existing = notes.find((note) => note.id === activeId);
+      if (existing) {
+        existing.title = els.title.value;
+        existing.tags = els.tags.value;
+        existing.body = els.body.value;
+        existing.updatedAt = now;
+      } else {
+        activeId = now;
+        notes.push({
+          id: activeId,
+          title: els.title.value,
+          tags: els.tags.value,
+          body: els.body.value,
+          updatedAt: now,
+        });
+      }
+      persist();
+      renderNotes();
+      setStatus("Saved");
+    }
+
+    function deleteNote() {
+      if (activeId === null) {
+        newNote();
+        return;
+      }
+      notes = notes.filter((note) => note.id !== activeId);
+      persist();
+      newNote();
+      setStatus("Deleted");
+    }
+
+    els.fresh.addEventListener("click", newNote);
+    els.save.addEventListener("click", saveNote);
+    els.del.addEventListener("click", deleteNote);
+    els.search.addEventListener("input", renderNotes);
+    document.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        saveNote();
+      }
+    });
+
+    if (notes.length > 0) {
+      selectNote(notes.slice().sort((a, b) => b.updatedAt - a.updatedAt)[0].id);
+    } else {
+      renderNotes();
+    }
+  </script>
+</body>
+</html>

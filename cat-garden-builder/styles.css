@@ -1,0 +1,424 @@
+:root {
+  color-scheme: light;
+  --ink: #20231d;
+  --muted: rgba(32, 35, 29, 0.58);
+  --panel: rgba(255, 255, 255, 0.84);
+  --line: rgba(32, 35, 29, 0.13);
+  --leaf: #3f9a67;
+  --soil: #9d7351;
+  --rose: #e7676a;
+  --gold: #e7b84b;
+  --sky: #64a8d8;
+  --violet: #8b6bd6;
+  --shadow: rgba(43, 39, 29, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(circle at 16% 12%, rgba(100, 168, 216, 0.22), transparent 24rem),
+    radial-gradient(circle at 86% 18%, rgba(231, 103, 106, 0.18), transparent 22rem),
+    linear-gradient(135deg, #f7f4e9 0%, #ebf7ee 52%, #f7eef6 100%);
+  color: var(--ink);
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  width: min(1220px, calc(100vw - 32px));
+  height: min(900px, calc(100vh - 32px));
+  margin: 16px auto;
+  display: grid;
+  grid-template-columns: minmax(560px, 820px) minmax(280px, 330px);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.garden-panel,
+.side-panel {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: 8px;
+  box-shadow: 0 24px 62px var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.garden-panel {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.topbar {
+  height: 78px;
+  padding: 16px 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+h1 {
+  margin: 0;
+  font-size: 27px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.topbar p {
+  margin: 8px 0 0;
+  color: var(--leaf);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  line-height: 1;
+  box-shadow: 0 10px 24px rgba(32, 35, 29, 0.2);
+}
+
+.icon-button.danger {
+  background: var(--rose);
+}
+
+.garden-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.25) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.25) 1px, transparent 1px),
+    linear-gradient(180deg, #dcefe2 0%, #fff2ce 58%, #f4dddd 100%);
+  background-size: 34px 34px, 34px 34px, auto;
+  touch-action: none;
+}
+
+#gameCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.side-panel {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+
+.wallet,
+.catalog,
+.selection,
+.log-panel {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.68);
+  border-radius: 8px;
+}
+
+.wallet,
+.selection,
+.log-panel {
+  padding: 14px;
+}
+
+.wallet span,
+.selection span,
+.log-panel span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.wallet strong,
+.selection strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.wallet small,
+.selection small {
+  display: block;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.tool-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.tool-row button {
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.tool-row button.active {
+  background: var(--leaf);
+  color: #fff;
+  border-color: transparent;
+}
+
+.catalog {
+  padding: 12px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.tabs button {
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.tabs button.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: transparent;
+}
+
+.catalog-list {
+  margin-top: 10px;
+  max-height: 252px;
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+  scrollbar-width: thin;
+}
+
+.catalog-item {
+  min-height: 54px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.70);
+  cursor: pointer;
+  padding: 9px 10px;
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.catalog-item.active {
+  box-shadow: inset 0 0 0 2px rgba(63, 154, 103, 0.26);
+  background: rgba(232, 247, 237, 0.92);
+}
+
+.item-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: rgba(32, 35, 29, 0.08);
+  font-weight: 900;
+}
+
+.catalog-item strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.catalog-item span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.catalog-item em {
+  color: var(--leaf);
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.log-panel {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#logList {
+  height: calc(100% - 24px);
+  margin-top: 10px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: thin;
+}
+
+.log-line {
+  color: rgba(32, 35, 29, 0.76);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+@media (max-width: 920px) {
+  body {
+    overflow: auto;
+  }
+
+  .app {
+    width: min(100vw - 18px, 680px);
+    height: auto;
+    min-height: calc(100vh - 18px);
+    margin: 9px auto;
+    grid-template-columns: 1fr;
+  }
+
+  .garden-panel {
+    height: min(720px, calc(100vh - 250px));
+    min-height: 520px;
+  }
+
+  .side-panel {
+    min-height: 420px;
+  }
+}
+
+/* Eerie storybook reskin: muted ink, old paper, hard outlines. */
+:root {
+  --ink: #1d1914;
+  --muted: rgba(29, 25, 20, 0.58);
+  --panel: rgba(226, 214, 187, 0.92);
+  --line: rgba(29, 25, 20, 0.28);
+  --leaf: #53614b;
+  --soil: #7a523b;
+  --rose: #8f3a32;
+  --gold: #b7893f;
+  --sky: #516276;
+  --violet: #61506b;
+  --shadow: rgba(29, 22, 15, 0.34);
+}
+
+body {
+  background-color: #d8c9aa;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(29, 25, 20, 0.035) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgba(255, 250, 229, 0.20) 0 1px, transparent 1px 12px),
+    linear-gradient(135deg, #c7b28f 0%, #e0d3b7 45%, #9b6d56 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.42;
+  background:
+    repeating-linear-gradient(22deg, rgba(34, 28, 21, 0.06) 0 1px, transparent 1px 9px),
+    linear-gradient(180deg, rgba(22, 18, 15, 0.12), rgba(255, 244, 211, 0.10));
+}
+
+h1 {
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-weight: 900;
+}
+
+.garden-panel,
+.side-panel {
+  background: var(--panel);
+  border: 2px solid #1d1914;
+  box-shadow: 8px 10px 0 rgba(29, 25, 20, 0.22), 0 24px 62px var(--shadow);
+}
+
+.topbar {
+  border-bottom: 2px solid #1d1914;
+}
+
+.garden-wrap {
+  background:
+    repeating-linear-gradient(0deg, rgba(32, 27, 22, 0.08) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(32, 27, 22, 0.08) 0 1px, transparent 1px 34px),
+    linear-gradient(180deg, #6f7a68 0%, #a99a75 48%, #7b5946 100%);
+}
+
+.garden-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(16, 13, 10, 0.20), transparent 18%, transparent 82%, rgba(16, 13, 10, 0.20)),
+    linear-gradient(180deg, rgba(16, 13, 10, 0.18), transparent 24%, transparent 78%, rgba(16, 13, 10, 0.22));
+}
+
+#gameCanvas {
+  filter: sepia(0.30) saturate(0.62) contrast(1.10) brightness(0.92);
+}
+
+.icon-button,
+.wallet,
+.catalog,
+.selection,
+.log-panel,
+.tool-row button,
+.tabs button,
+.catalog-item {
+  border-radius: 4px;
+}

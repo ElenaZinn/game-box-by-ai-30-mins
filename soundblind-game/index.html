@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>回声拼图</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="stage-wrap" aria-label="Echo stage">
+        <canvas id="stage"></canvas>
+        <div class="level-badge">
+          <span id="levelCode">01</span>
+          <strong id="levelName">静音玄关</strong>
+        </div>
+        <div id="toast" class="toast"></div>
+        <div id="startOverlay" class="start-overlay">
+          <div class="mark">◎</div>
+          <h1>回声拼图</h1>
+          <button id="beginButton" class="big-start" type="button" title="开始">▶</button>
+        </div>
+        <div id="endOverlay" class="end-overlay" hidden>
+          <div class="end-mark">◆</div>
+          <h2>拼图完成</h2>
+          <p>所有碎片都回到图里，黑暗安静下来了。</p>
+          <div class="end-actions">
+            <button id="replayButton" class="end-primary" type="button">再来一次</button>
+            <button id="stayButton" class="end-secondary" type="button">留在这里</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <header class="side-head">
+          <div>
+            <span class="kicker">ECHO</span>
+            <h2>回声拼图</h2>
+          </div>
+          <div class="head-actions">
+            <button id="helpButton" class="icon-button" type="button" title="规则">?</button>
+            <button id="soundButton" class="icon-button" type="button" title="声音">◐</button>
+          </div>
+        </header>
+
+        <div class="meters">
+          <div>
+            <small>碎片</small>
+            <strong id="pieceCount">0/6</strong>
+          </div>
+          <div>
+            <small>距离</small>
+            <strong id="distanceRead">--</strong>
+          </div>
+        </div>
+
+        <div id="puzzle" class="puzzle" aria-label="Puzzle"></div>
+
+        <div class="buttons">
+          <button id="pulseButton" class="icon-button large" type="button" title="回声">◎</button>
+          <button id="nextButton" class="icon-button large" type="button" title="下一关">↦</button>
+          <button id="resetButton" class="icon-button large" type="button" title="重置">↺</button>
+        </div>
+
+        <div id="log" class="log" aria-live="polite"></div>
+      </aside>
+    </main>
+
+    <div id="rulesDialog" class="rules-dialog" role="dialog" aria-modal="true" aria-labelledby="rulesTitle" hidden>
+      <div class="rules-panel">
+        <button id="rulesCloseButton" class="rules-close" type="button" title="关闭">×</button>
+        <span class="kicker">HOW TO LISTEN</span>
+        <h2 id="rulesTitle">在黑暗里找碎片</h2>
+        <div class="rule-list">
+          <p><strong>听方向</strong>：声音偏左，目标在左边；声音偏右，目标在右边。耳机效果最好。</p>
+          <p><strong>听距离</strong>：越近，提示音越清楚；回声越晚回来，通常代表目标更远。</p>
+          <p><strong>避开墙</strong>：暗处有墙会挡住移动，也会被回声短促地敲出来。</p>
+          <p><strong>找碎片</strong>：靠近隐藏物后发出回声，找到后会解锁右侧拼图的一块。</p>
+        </div>
+        <div class="rule-keys">
+          <span>WASD / 方向键移动</span>
+          <span>空格 / ◎ 发出回声</span>
+        </div>
+        <button id="rulesStartButton" class="rule-start" type="button">开始听</button>
+      </div>
+    </div>
+
+    <script src="./game.js"></script>
+  </body>
+</html>

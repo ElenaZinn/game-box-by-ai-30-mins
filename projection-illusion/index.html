@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>投影错觉实验室</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="bar">
+        <div>
+          <p class="eyebrow">PROJECTION ILLUSION</p>
+          <h1>投影错觉实验室</h1>
+        </div>
+        <div class="readout" aria-label="当前投影">
+          <span id="shapeName">花瓶投影</span>
+          <strong id="angleReadout">26°</strong>
+        </div>
+      </header>
+
+      <section class="stage" aria-label="投影错觉互动场景">
+        <canvas id="stage" width="1280" height="720" tabindex="0"></canvas>
+        <div class="level-card" aria-live="polite">
+          <div class="level-head">
+            <span id="levelNumber">第 1 / 8 关</span>
+            <button id="nextLevelBtn" class="small-button" type="button" hidden>下一关</button>
+          </div>
+          <strong id="levelPrompt">投影出：宽肚花瓶</strong>
+          <p id="levelHint">宽肚、细颈、底部有小脚。</p>
+          <div class="solve-meter" aria-label="对准程度">
+            <span id="levelMeter"></span>
+          </div>
+          <span id="levelStatus" class="level-status">寻找目标影子</span>
+        </div>
+        <div class="hud" aria-label="控制面板">
+          <button id="autoBtn" class="icon-button" type="button" title="自动旋转" aria-label="自动旋转">
+            <span aria-hidden="true">▶</span>
+          </button>
+          <button id="nudgeLeftBtn" class="icon-button" type="button" title="逆时针微调" aria-label="逆时针微调">
+            <span aria-hidden="true">↺</span>
+          </button>
+          <button id="nudgeRightBtn" class="icon-button" type="button" title="顺时针微调" aria-label="顺时针微调">
+            <span aria-hidden="true">↻</span>
+          </button>
+          <label class="slider">
+            <span>角度</span>
+            <input id="angleSlider" type="range" min="0" max="360" step="0.1" value="26" />
+          </label>
+          <label class="slider compact">
+            <span>灯强</span>
+            <input id="lightSlider" type="range" min="0.35" max="1.35" step="0.01" value="1" />
+          </label>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
